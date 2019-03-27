@@ -1,6 +1,11 @@
 import { Scene } from 'phaser'
 
 class GameScene extends Scene {
+  constructor() {
+    super()
+    this.score = 0;
+    this.gameOver = false;
+  }
 
   preload() {
     this.load.image('sky', 'assets/sky.png')
@@ -21,6 +26,8 @@ class GameScene extends Scene {
     this.createPlayer();
     this.createCursor();
     this.createStars();
+    this.createBombs();
+    this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
   }
 
   update() {
@@ -104,8 +111,37 @@ class GameScene extends Scene {
   }
   collectStar(player, star) {
     star.disableBody(true, true);
-  }
+    this.score += 10;
+    this.scoreText.setText('Score: ' + this.score);
+    if (this.stars.countActive(true) === 0) {
+        this.stars.children.iterate((child) => {
 
+            child.enableBody(true, child.x, 0, true, true);
+
+        });
+
+        const x = (this.player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+        const bomb = this.bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1); // infinite move
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
+    }
+  }
+  createBombs() {
+    this.bombs = this.physics.add.group();
+
+    this.physics.add.collider(this.bombs, this.platforms);
+
+    this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
+  }
+  hitBomb(player, bomb) {
+      this.physics.pause();
+      this.player.setTint(0xff0000);
+      this.player.anims.play('turn');
+      this.gameOver = true;
+  }
 }
 
 export default GameScene
