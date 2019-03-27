@@ -28,9 +28,7 @@ class GameScene extends Scene {
     this.createStars();
     this.createBombs();
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
-    this.gameOverText = this.add.text(400, 300, 'Game Over!', { fontSize: '64px', fill: 'red' });
-    this.gameOverText.setOrigin(.5); // 1, 0, .5 for diferent position on x
-    this.gameOverText.visible = false;
+
   }
 
   update() {
@@ -69,7 +67,7 @@ class GameScene extends Scene {
 
   createPlayer() {
     this.player = this.physics.add.sprite(100, 450, 'dude');
-
+    this.player.setCircle(13, 4, 14);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.physics.add.collider(this.player, this.platforms);
@@ -107,7 +105,7 @@ class GameScene extends Scene {
     this.stars.children.iterate(function (child) {
 
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
+        child.setCircle(12);
     });
     this.physics.add.collider(this.stars, this.platforms);
     this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
@@ -127,6 +125,7 @@ class GameScene extends Scene {
 
         const bomb = this.bombs.create(x, 16, 'bomb');
         bomb.setBounce(1); // infinite move
+        bomb.setCircle(7);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
@@ -145,7 +144,7 @@ class GameScene extends Scene {
       this.player.anims.play('turn');
       this.gameOver = true;
       // show the gameover text
-      this.gameOverText.visible = true;
+      this.scene.start('gameover');
   }
 }
 

@@ -8,7 +8,9 @@ class PreloadScene extends Scene {
     this.load.image('logo', 'assets/logo.png');
   }
   create() {
-    this.add.image(400, 300, 'logo');
+    this.add.image(400, 300, 'logo')
+    this.add.text(400, 500, 'Click to start!', { fontSize: '64px', fill: 'green' }).setOrigin(.5)
+    this.input.on('pointerdown', () => this.scene.start('game'));
   }
 }
 
