@@ -2,7 +2,7 @@ import { Scene } from 'phaser'
 
 class GameScene extends Scene {
   constructor() {
-    super()
+    super({ key: 'game' }) // or you can user super('game')
     this.score = 0;
     this.gameOver = false;
   }
@@ -28,6 +28,9 @@ class GameScene extends Scene {
     this.createStars();
     this.createBombs();
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    this.gameOverText = this.add.text(400, 300, 'Game Over!', { fontSize: '64px', fill: 'red' });
+    this.gameOverText.setOrigin(.5); // 1, 0, .5 for diferent position on x
+    this.gameOverText.visible = false;
   }
 
   update() {
@@ -141,6 +144,8 @@ class GameScene extends Scene {
       this.player.setTint(0xff0000);
       this.player.anims.play('turn');
       this.gameOver = true;
+      // show the gameover text
+      this.gameOverText.visible = true;
   }
 }
 
