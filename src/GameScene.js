@@ -17,6 +17,21 @@ class GameScene extends Scene {
         'assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
     );
+    //simulate load
+    for(let i=0; i<100; i++) {
+      this.load.image('star' + i, 'assets/star.png')
+    }
+    // end simulate
+    let loadingBar = this.add.graphics({
+      fillStyle: {
+        color: 0xffffff //white
+      }
+    });
+
+    this.load.on("progress", (percent) => {
+      loadingBar.fillRect(0, this.game.renderer.height / 2, this.game.renderer.width * percent, 50);
+      console.log(percent);
+    });
   }
 
   create() {
