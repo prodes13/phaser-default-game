@@ -4,7 +4,7 @@ import PreloadScene from './PreloadScene'
 import GameOverScene from './GameOverScene'
 
 const config = {
-    type: Phaser.AUTO,
+    type: Phaser.WEBGL,
     parent: 'phaser-example',
     width: 800,
     height: 600,
@@ -12,7 +12,7 @@ const config = {
       default: 'arcade',
       arcade: {
         gravity: { y: 300},
-        debug: true
+        debug: false
       }
     },
     scene: [PreloadScene, GameScene, GameOverScene]

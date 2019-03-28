@@ -1,4 +1,5 @@
 import Phaser, { Scene } from 'phaser'
+import particleConfig from './particleConfig'
 
 class GameScene extends Scene {
   constructor() {
@@ -27,8 +28,16 @@ class GameScene extends Scene {
     this.createCursor();
     this.createStars();
     this.createBombs();
+
+    this.createParticles();
+
     this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
 
+  }
+
+  createParticles() {
+    this.particles = this.add.particles('star');
+    this.starEmitter = this.particles.createEmitter(particleConfig);
   }
 
   update() {
@@ -112,6 +121,9 @@ class GameScene extends Scene {
   }
   collectStar(player, star) {
     star.disableBody(true, true);
+
+    this.particles.emitParticleAt(star.x, star.y, 50);
+
     this.score += 10;
     this.scoreText.setText('Score: ' + this.score);
     if (this.stars.countActive(true) === 0) {
