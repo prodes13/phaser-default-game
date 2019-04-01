@@ -2,6 +2,7 @@ import Phaser from 'phaser'
 import GameScene from './GameScene'
 import PreloadScene from './PreloadScene'
 import GameOverScene from './GameOverScene'
+import TestingScene from './TestingScene'
 
 const config = {
     type: Phaser.WEBGL,
@@ -15,7 +16,7 @@ const config = {
         debug: false
       }
     },
-    scene: [PreloadScene, GameScene, GameOverScene]
+    scene: [PreloadScene, GameScene, GameOverScene, TestingScene]
 }
 
 export { config }

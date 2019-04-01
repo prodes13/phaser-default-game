@@ -13,6 +13,7 @@ class PreloadScene extends Scene {
     logo.setDepth(2);
     this.add.text(400, 500, 'Click to start!', { fontSize: '64px', fill: 'green' }).setOrigin(.5)
     this.input.on('pointerdown', () => this.scene.start('game'));
+    this.input.keyboard.on('keydown', () => this.scene.start('testing'))
 
     const p = this.add.particles('particle');
     const e = p.createEmitter();
